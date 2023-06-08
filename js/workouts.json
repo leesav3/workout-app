@@ -1,0 +1,22 @@
+{
+    "workouts": {
+      "e1": {
+      "date": "06/06/2023",
+      "exercise": "biceps",
+      "sets": 3,
+      "reps": 24,
+      "weight": 30
+    },
+      "e2": {
+      "date": "06/06/2023",
+      "exercise": "legs",
+      "sets": 2,
+      "reps": 30,
+      "weight": 60
+    }
+  },
+    "notes": {
+        "date": "06/06/2023",
+        "note": "blah blah blah blah blah blah blah"
+      }
+} 

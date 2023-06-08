@@ -5,12 +5,32 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="css/styles.css">
         <link rel="stylesheet" href="css/reset.css">
+        <script type="module" src="js/script.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <title>Workouts</title>
     </head>
     <body>
-
-    </body>
+        <div id="container">
+            <div id="calendar">Eventually this will be a calendar.</div>
+            <div id="table-container">
+                <table id="table">
+                    <tr>
+                        <th>exercise</th>
+                        <th>sets</th>
+                        <th>reps</th>
+                        <th>weight</th>
+                    </tr>
+                </table>
+            </div>
+            <form>
+                <input type="text" placeholder="exercise" id="exercise" aria-label="exercise" />
+                <input type="number" placeholder="sets" id="sets" aria-label="sets" />
+                <input type="number" placeholder="reps" id="reps" aria-label="reps" />
+                <input type="number" placeholder="weight" id="weight" aria-label="weight" />
+                <input type="submit" aria-label="submit" name="Save" />
+            </form>
+        </div>
+</body>
 </html>

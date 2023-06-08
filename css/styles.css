@@ -1,0 +1,10 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+#calendar {
+    border: solid 2px black;
+    padding: 50px;
+    width: 30%;
+    text-align: center;
+}
