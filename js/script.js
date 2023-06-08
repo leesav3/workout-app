@@ -55,15 +55,17 @@ function addRow(val) {
   let i = 0;
   newRow = htmlTable.insertRow(-1);
   for (const key in val) {
-    console.log("KEY: " + key + " " + val[key]);
-   
-    // Insert a cell in the row at index i
-    newCell = newRow.insertCell(i);
+    if (key != 'date') {
+      console.log("KEY: " + key + " " + val[key]);
+    
+      // Insert a cell in the row at index i
+      newCell = newRow.insertCell(i);
 
-    // Append a text node to the cell
-    newText = document.createTextNode(val[key]);
-    newCell.appendChild(newText);
-    i += 1;
+      // Append a text node to the cell
+      newText = document.createTextNode(val[key]);
+      newCell.appendChild(newText);
+      i += 1;
+    }
   }
   
 }
