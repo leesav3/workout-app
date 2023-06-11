@@ -21,6 +21,7 @@ body {
     justify-content: center;
 }
 
+/* calendar styles */
 .calendar-container {
     background: var(--off-white);
     width: 450px;
@@ -127,12 +128,16 @@ header .calendar-current-date {
 }
 
 .calendar-dates li.active:hover::before {
-    background: var(--light-gray);
-    color: var(--dark-gray);
+    background: var(--red);
 }
 
 .calendar-dates li:not(.active):hover::before {
     background: var(--light-gray);
+}
+
+/* exercise table styles */
+#selected-date {
+    color: var(--off-white);
 }
 
 #table, th, td {
@@ -143,4 +148,8 @@ header .calendar-current-date {
 
 th {
     border: solid 2px black;  
+}
+
+.hide {
+    display: none;
 }

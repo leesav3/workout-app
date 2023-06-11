@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
+import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -15,21 +15,24 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-// Initialize Realtime Database and get a reference to the service
-const database = getDatabase(app);
 
 
+
+/*
 //get all the json data and populate the table
 const htmlTable = document.getElementById("table");
 
 const db = getDatabase();
 const exercises = ref(db, 'workouts/');
+let value = new Object();
 onValue(exercises, (snapshot) => {
   const exerciseData = snapshot.val();
   for (let key in exerciseData) {
-    let value = exerciseData[key];
+    value = exerciseData[key];
+    console.log(value);
+
     addRow(value);
-    console.log("TESt: " + value[key])
+    /*console.log("TESt: " + value[key])
     console.log(value.date);
     console.log(value.sets);
     console.log(value.reps);
@@ -38,25 +41,31 @@ onValue(exercises, (snapshot) => {
   }
 });
 
+
 const notes = ref(db, 'notes/');
 onValue(notes, (snapshot) => {
   const noteData = snapshot.val();
   for (let key in noteData) {
     let value = noteData[key];
-    console.log(value.date);
+    /*console.log(value.date);
     console.log(value.note);
     console.log(key);
   }
-});
+}); */
+
+
 
 function addRow(val) {
+  const htmlTable = document.getElementById("table");
   // Insert a row at the end of the table
   let newRow, newCell, newText;
   let i = 0;
   newRow = htmlTable.insertRow(-1);
+  newRow.className = "tr";
   for (const key in val) {
+    //console.log("here2: " + val[key] + " " + selectedDate);
     if (key != 'date') {
-      console.log("KEY: " + key + " " + val[key]);
+      //console.log("KEY: " + key + " " + val[key]);
     
       // Insert a cell in the row at index i
       newCell = newRow.insertCell(i);
@@ -67,7 +76,9 @@ function addRow(val) {
       i += 1;
     }
   }
+}
 
+  // create calendar
   let date=new Date(); // creates a new date object with the current date and time
         let year=date.getFullYear(); // gets the current year
         let month=date.getMonth(); // gets the current month (index based, 0-11)
@@ -108,19 +119,21 @@ function addRow(val) {
         
             // loop to add the last dates of the previous month
             for (let i=dayone; i > 0; i--) {
-        lit+=`<li class="inactive day">${monthlastdate - i + 1}</li>`;
+              //let x = monthlastdate - i + 1;
+        lit+=`<li id="${month}/${monthlastdate - i + 1}/${year}" class="inactive day">${monthlastdate - i + 1}</li>`;
+        //console.log(year + " " + month + " " + x);
             }
         
             // loop to add the dates of the current month
             for (let i=1; i <=lastdate; i++) {
         // check if the current date is today
         let isToday=i===date.getDate() && month===new Date().getMonth() && year===new Date().getFullYear() ? "active": "";
-        lit+=`<li class="${isToday} day">${i}</li>`;
+        lit+=`<li id="${month+1}/${i}/${year}" class="${isToday} day">${i}</li>`;
             }
         
             // loop to add the first dates of the next month
             for (let i=dayend; i < 6; i++) {
-        lit+=`<li class="inactive day">${i - dayend + 1}</li>`
+        lit+=`<li id="${month+2}/${i-dayend+1}/${year}" class="inactive day">${i - dayend + 1}</li>`
             }
         
             // update the text of the current date element with the formatted current month and year
@@ -160,8 +173,8 @@ function addRow(val) {
             });
             });
   
-}
 
+// highlight clicked date on calendar
 document.getElementById("calendar-dates").addEventListener("click", function(e) {
   
   //remove selected active day
@@ -172,4 +185,74 @@ document.getElementById("calendar-dates").addEventListener("click", function(e) 
   
   //add clicked day as active
   e.target.classList.add("active");
+  let today = new Date().toLocaleDateString();
+
+  //display exercises for day
+  getData(e.target.id);
+
 });
+
+function getData(selectedDate) {
+  const db = getDatabase();
+  const exercises = ref(db, 'workouts/');
+  const notes = ref(db, 'notes/');
+
+  // hide current table rows
+  let tr = document.getElementsByClassName("tr");
+  for (let j=tr.length-1; j>=0; j--) {
+    tr[j].remove
+  }
+  
+
+  // show table and form
+  let hiddenElements = document.getElementsByClassName("hide");
+  for (let i=hiddenElements.length-1; i>=0; i--) {
+    hiddenElements[i].classList.toggle("hide");
+  }
+  // display date in title
+  document.getElementById("selected-date").innerHTML = selectedDate;
+
+  let value = new Object();
+  //query json data
+  get(exercises).then((snapshot) => {
+    if (snapshot.exists()) {
+      const exerciseData = snapshot.val();
+      for (let key in exerciseData) {
+        value = exerciseData[key];
+        //console.log(value.date);
+        if (value.date === selectedDate) {
+          addRow(value);
+        }
+      }
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+/*
+  for (let key in exerciseData) {
+    value = exerciseData[key];
+    console.log(value);
+  }
+    
+  /*
+  // Insert a row at the end of the table
+  let newRow, newCell, newText;
+  let i = 0;
+  newRow = htmlTable.insertRow(-1);
+  for (const key in val) {
+    if (key != 'date') {
+      //console.log("KEY: " + key + " " + val[key]);
+    
+      // Insert a cell in the row at index i
+      newCell = newRow.insertCell(i);
+
+      // Append a text node to the cell
+      newText = document.createTextNode(val[key]);
+      newCell.appendChild(newText);
+      i += 1;
+    }
+  }
+  */
+};

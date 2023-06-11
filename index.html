@@ -34,17 +34,18 @@
                     <ul id="calendar-dates" class="calendar-dates"></ul>
                 </div>
             </div>
-            <div id="table-container">
+            <div id="exercise-container">
+                <div id="selected-date"></div>
                 <table id="table">
                     <tr>
-                        <th>exercise</th>
-                        <th>sets</th>
-                        <th>reps</th>
-                        <th>weight</th>
+                        <th class="hide">exercise</th>
+                        <th class="hide">sets</th>
+                        <th class="hide">reps</th>
+                        <th class="hide">weight</th>
                     </tr>
                 </table>
             </div>
-            <form>
+            <form class="hide">
                 <input type="text" placeholder="exercise" id="exercise" aria-label="exercise" />
                 <input type="number" placeholder="sets" id="sets" aria-label="sets" />
                 <input type="number" placeholder="reps" id="reps" aria-label="reps" />
